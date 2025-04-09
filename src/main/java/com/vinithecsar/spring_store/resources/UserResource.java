@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vinithecsar.spring_store.entities.User;
-import com.vinithecsar.spring_store.exceptions.ResourceNotFoundException;
 import com.vinithecsar.spring_store.services.UserService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,10 +37,6 @@ public class UserResource {
   @GetMapping(value = "/{id}")
   public ResponseEntity<User> findById(@PathVariable Long id) {
     User obj = userService.findById(id);
-
-    if (obj == null) {
-      throw new ResourceNotFoundException("User with ID " + id + " not found");
-    }
 
     return ResponseEntity.ok(obj);
   }

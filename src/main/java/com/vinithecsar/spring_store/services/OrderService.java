@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vinithecsar.spring_store.entities.Order;
 import com.vinithecsar.spring_store.repositories.OrderRepository;
+import com.vinithecsar.spring_store.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class OrderService {
@@ -23,6 +24,6 @@ public class OrderService {
 
   public Order findById(Long id) {
     Optional<Order> obj = orderRepository.findById(id);
-    return obj.isPresent() ? obj.get() : null;
+    return obj.orElseThrow(() -> new ResourceNotFoundException(id));
   }
 }

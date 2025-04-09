@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vinithecsar.spring_store.entities.Category;
 import com.vinithecsar.spring_store.repositories.CategoryRepository;
+import com.vinithecsar.spring_store.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoryService {
@@ -23,6 +24,6 @@ public class CategoryService {
 
   public Category findById(Long id) {
     Optional<Category> obj = categoryRepository.findById(id);
-    return obj.isPresent() ? obj.get() : null;
+    return obj.orElseThrow(() -> new ResourceNotFoundException(id));
   }
 }

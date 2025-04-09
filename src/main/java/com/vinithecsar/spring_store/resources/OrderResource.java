@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vinithecsar.spring_store.entities.Order;
-import com.vinithecsar.spring_store.exceptions.ResourceNotFoundException;
 import com.vinithecsar.spring_store.services.OrderService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +31,6 @@ public class OrderResource {
   @GetMapping(value = "/{id}")
   public ResponseEntity<Order> findById(@PathVariable Long id) {
     Order obj = orderService.findById(id);
-
-    if (obj == null) {
-      throw new ResourceNotFoundException("Order with ID " + id + " not found");
-    }
 
     return ResponseEntity.ok(obj);
   }

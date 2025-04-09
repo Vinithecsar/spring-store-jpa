@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vinithecsar.spring_store.entities.Product;
-import com.vinithecsar.spring_store.exceptions.ResourceNotFoundException;
 import com.vinithecsar.spring_store.services.ProductService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +31,6 @@ public class ProductResource {
   @GetMapping(value = "/{id}")
   public ResponseEntity<Product> findById(@PathVariable Long id) {
     Product obj = productService.findById(id);
-
-    if (obj == null) {
-      throw new ResourceNotFoundException("Product with ID " + id + " not found");
-    }
 
     return ResponseEntity.ok(obj);
   }

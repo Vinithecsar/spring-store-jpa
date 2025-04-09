@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vinithecsar.spring_store.entities.Product;
 import com.vinithecsar.spring_store.repositories.ProductRepository;
+import com.vinithecsar.spring_store.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProductService {
@@ -23,6 +24,6 @@ public class ProductService {
 
   public Product findById(Long id) {
     Optional<Product> obj = productRepository.findById(id);
-    return obj.isPresent() ? obj.get() : null;
+    return obj.orElseThrow(() -> new ResourceNotFoundException(id));
   }
 }
