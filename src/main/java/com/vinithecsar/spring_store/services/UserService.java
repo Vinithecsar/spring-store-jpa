@@ -3,10 +3,12 @@ package com.vinithecsar.spring_store.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.vinithecsar.spring_store.entities.User;
 import com.vinithecsar.spring_store.repositories.UserRepository;
+import com.vinithecsar.spring_store.services.exceptions.DatabaseException;
 import com.vinithecsar.spring_store.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -32,7 +34,15 @@ public class UserService {
   }
 
   public void delete(Long id) {
-    userRepository.deleteById(id);
+    try {
+      if (userRepository.existsById(id)) {
+        userRepository.deleteById(id);
+      } else {
+        throw new ResourceNotFoundException(id);
+      }
+    } catch (DataIntegrityViolationException e) {
+      throw new DatabaseException(e.getMessage());
+    }
   }
 
   public User update(Long id, User obj) {
